@@ -1,7 +1,6 @@
 package tbsupervisor
 
 import (
-
 	"errors"
 	"github.com/stretchr/testify/assert"
 	"reflect"
@@ -77,7 +76,7 @@ func Test_taskBatchSupervisor_Supervise(t *testing.T) {
 			tbChan, errChan := tbs.Supervise(tt.args.batch, tt.args.handlerMap)
 			var tb TaskBatch
 			var tbError error
-			testloop: //label is needed because you will be breaking out of the innermost select
+		testloop: //label is needed because you will be breaking out of the innermost select
 			for {
 				select {
 				case tb = <-tbChan:

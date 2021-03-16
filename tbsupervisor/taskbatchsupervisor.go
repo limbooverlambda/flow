@@ -1,7 +1,6 @@
 package tbsupervisor
 
 import (
-
 	"errors"
 
 	"flow/models"
@@ -11,9 +10,9 @@ import (
 )
 
 type TaskBatch struct {
-	TaskRunIDs []string
-	NextTaskRunIDs[] string
-	Context    models.FlowContext
+	TaskRunIDs     []string
+	NextTaskRunIDs []string
+	Context        models.FlowContext
 }
 
 type TaskBatchSupervisor interface {
@@ -28,8 +27,8 @@ type taskBatchSupervisor struct {
 	taskRunner trun.TaskRunner
 }
 
-func (tbs taskBatchSupervisor) Supervise(batch TaskBatch, handlerMap *steps.HandlerMap) (<- chan TaskBatch, <-chan error) {
-	taskBatchErrorChan := make(chan  error)
+func (tbs taskBatchSupervisor) Supervise(batch TaskBatch, handlerMap *steps.HandlerMap) (<-chan TaskBatch, <-chan error) {
+	taskBatchErrorChan := make(chan error)
 	taskBatchChan := make(chan TaskBatch)
 	go func() {
 		defer close(taskBatchErrorChan)
@@ -58,7 +57,7 @@ func (tbs taskBatchSupervisor) Supervise(batch TaskBatch, handlerMap *steps.Hand
 						//Merge the returned context
 						batchContext = tbs.mergeContext(batchContext, taskRunContext)
 						//Merge the next TaskRunIDs
-						batchNextTaskRunIDS = append(batchNextTaskRunIDS, trStatus.NextTaskRunIDs ...)
+						batchNextTaskRunIDS = append(batchNextTaskRunIDS, trStatus.NextTaskRunIDs...)
 						break taskrunstatus
 					}
 				case trError := <-taskRunSignal.TaskRunErrorChan:
@@ -70,8 +69,8 @@ func (tbs taskBatchSupervisor) Supervise(batch TaskBatch, handlerMap *steps.Hand
 			}
 		}
 		aggregatedTaskBatch := TaskBatch{
-			TaskRunIDs: taskIDsToBeRun,
-			Context:    batchContext,
+			TaskRunIDs:     taskIDsToBeRun,
+			Context:        batchContext,
 			NextTaskRunIDs: batchNextTaskRunIDS,
 		}
 

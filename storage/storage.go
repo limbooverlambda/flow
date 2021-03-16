@@ -1,7 +1,6 @@
 package storage
 
 import (
-
 	"errors"
 	"fmt"
 	"log"
@@ -56,7 +55,6 @@ func GetWorkflowRunSchema() string {
 	`
 }
 
-
 type WorkflowRunStore interface {
 	Get(wfRunID string) (models.WorkflowRun, error)
 	Store(workflowRun models.WorkflowRun) error
@@ -66,7 +64,6 @@ type WorkflowRunStore interface {
 func NewWorkflowRunStore(dbCommon *db.Common) WorkflowRunStore {
 	return &wfRunStore{dbCommon: dbCommon}
 }
-
 
 type wfRunStore struct {
 	dbCommon *db.Common

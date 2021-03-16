@@ -9,7 +9,7 @@ func bfs(buffer []interface{},
 		nextElements := getNextFn(element)
 		buffer = buffer[1:]
 		if len(nextElements) > 0 {
-			buffer = append(buffer, nextElements ...)
+			buffer = append(buffer, nextElements...)
 		}
 	}
 }

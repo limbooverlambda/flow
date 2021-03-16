@@ -11,7 +11,3 @@ type Flow interface {
 	//StartSteps returns the initial set of steps that will trigger the flow
 	StartSteps() []steps.Step
 }
-
-
-
-

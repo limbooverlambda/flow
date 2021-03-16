@@ -37,7 +37,7 @@ loop:
 		case <-p.ticker.C:
 			{
 				wfRun, pollError = p.checkForWfRun(runID)
-				if pollError != nil  {
+				if pollError != nil {
 					log.Printf("Issue polling for wfRun %v\n", pollError)
 					break loop
 				}

@@ -18,10 +18,9 @@ type Trigger interface {
 	GetWorkflowRun(flowRunID models.RunID) (models.WorkflowRun, error)
 }
 
-
-func NewFlowTrigger(workflowRunStore storage.WorkflowRunStore, taskRunStore storage.TaskRunStore ) Trigger {
+func NewFlowTrigger(workflowRunStore storage.WorkflowRunStore, taskRunStore storage.TaskRunStore) Trigger {
 	return flowTrigger{
-		wfRunStore:   workflowRunStore,
+		wfRunStore: workflowRunStore,
 		wfRunSupervisor: wfRunSupervisor{
 			poller:       poll.NewWorkflowRunPoller(workflowRunStore),
 			wfRunStore:   workflowRunStore,
@@ -36,10 +35,9 @@ type workflowRunSupervisor interface {
 }
 
 type flowTrigger struct {
-	wfRunStore   storage.WorkflowRunStore
+	wfRunStore      storage.WorkflowRunStore
 	wfRunSupervisor workflowRunSupervisor
 }
-
 
 func (f flowTrigger) StartRun(runID string, handlerMap *steps.HandlerMap) error {
 	return f.wfRunSupervisor.supervise(runID, handlerMap)
@@ -48,7 +46,6 @@ func (f flowTrigger) StartRun(runID string, handlerMap *steps.HandlerMap) error 
 func (f flowTrigger) GetWorkflowRun(flowRunID models.RunID) (models.WorkflowRun, error) {
 	return f.wfRunStore.Get(string(flowRunID))
 }
-
 
 type wfRunSupervisor struct {
 	poller       poll.WfRunPoller

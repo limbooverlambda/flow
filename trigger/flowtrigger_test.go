@@ -1,7 +1,6 @@
 package trigger
 
 import (
-
 	"github.com/stretchr/testify/mock"
 	"testing"
 
@@ -11,7 +10,6 @@ import (
 	"flow/storage"
 	"flow/tbsupervisor"
 )
-
 
 func Test_wfRunSupervisor_supervisorFn(t *testing.T) {
 	var fakePoller poll.FakeWfRunPoller
@@ -25,7 +23,7 @@ func Test_wfRunSupervisor_supervisorFn(t *testing.T) {
 	type fields struct {
 		poller       poll.WfRunPoller
 		wfRunStore   storage.WorkflowRunStore
-		tRunStore storage.TaskRunStore
+		tRunStore    storage.TaskRunStore
 		tbSupervisor tbsupervisor.TaskBatchSupervisor
 	}
 	type args struct {
@@ -37,14 +35,14 @@ func Test_wfRunSupervisor_supervisorFn(t *testing.T) {
 		fields fields
 		args   args
 	}{{
-		name:   "happypath",
+		name: "happypath",
 		fields: fields{
-			poller:      &fakePoller,
+			poller:       &fakePoller,
 			wfRunStore:   &fakeWfRunStore,
-			tRunStore: &fakeTRunStore,
+			tRunStore:    &fakeTRunStore,
 			tbSupervisor: fakeTbSupervisor,
 		},
-		args:   args{
+		args: args{
 			runID:      "",
 			handlerMap: nil,
 		},
@@ -61,17 +59,16 @@ func Test_wfRunSupervisor_supervisorFn(t *testing.T) {
 
 			fakeWfRunStore.On("Update", mock.Anything).
 				Return(models.WorkflowRun{
-				Lifecycle: models.DONE,
-			}, nil)
+					Lifecycle: models.DONE,
+				}, nil)
 
 			fakeTRunStore.On("GetNextTaskRunIDs", mock.Anything).
 				Return([]string{}, nil)
 
-
 			wfRun := wfRunSupervisor{
 				poller:       tt.fields.poller,
 				wfRunStore:   tt.fields.wfRunStore,
-				tRunStore: tt.fields.tRunStore,
+				tRunStore:    tt.fields.tRunStore,
 				tbSupervisor: tt.fields.tbSupervisor,
 			}
 			wfRun.supervisorFn(tt.args.runID, tt.args.handlerMap)
@@ -94,4 +91,3 @@ func (faketbsuper) Supervise(tbsupervisor.TaskBatch, *steps.HandlerMap) (<-chan 
 	}()
 	return fakeTbChannel, fakeErrorChannel
 }
-
