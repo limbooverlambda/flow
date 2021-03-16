@@ -22,7 +22,6 @@ const (
 //HandlerMap is the alias from stepname to handler logic
 type HandlerMap map[string]StepHandler
 
-
 //Step is the discrete Step that will be executed by the runner
 type Step interface {
 	//Name returns the name of the Step
@@ -40,6 +39,3 @@ type StepHandler interface {
 	//Checks the status of the step based on the current context
 	Status(flowContext models.FlowContext) (StepStatus, error)
 }
-
-
-

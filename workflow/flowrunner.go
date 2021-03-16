@@ -1,7 +1,6 @@
 package workflow
 
 import (
-
 	"errors"
 	"log"
 
@@ -23,22 +22,19 @@ func NewFlowRunner(dbCommon *db.Common) FlowRunner {
 	workflowRunStore := storage.NewWorkflowRunStore(dbCommon)
 	taskRunStore := storage.NewTaskRunStore(dbCommon)
 	return flowrunner{
-		idGen:    NewIDGenerator(),
+		idGen:            NewIDGenerator(),
 		workflowRunStore: workflowRunStore,
-		taskRunStore: taskRunStore,
-		fUnwrap:  NewFlowUnwrapper(workflowRunStore, taskRunStore),
-
+		taskRunStore:     taskRunStore,
+		fUnwrap:          NewFlowUnwrapper(workflowRunStore, taskRunStore),
 	}
 }
 
 type flowrunner struct {
-	idGen     Id
+	idGen            Id
 	workflowRunStore storage.WorkflowRunStore
-	taskRunStore storage.TaskRunStore
-	fUnwrap   FlowUnwrapper
-
+	taskRunStore     storage.TaskRunStore
+	fUnwrap          FlowUnwrapper
 }
-
 
 //StartRun will perform the following:
 // Sync path:
@@ -90,8 +86,8 @@ func (fr flowrunner) StartRun(accountID string, flow Flow, context models.FlowCo
 	if err != nil {
 		return "", err
 	}
-	fTrigger:= trigger.NewFlowTrigger(fr.workflowRunStore, fr.taskRunStore)
-	if err := fTrigger.StartRun(runID, handlerMap );err != nil {
+	fTrigger := trigger.NewFlowTrigger(fr.workflowRunStore, fr.taskRunStore)
+	if err := fTrigger.StartRun(runID, handlerMap); err != nil {
 		return "", err
 	}
 	log.Printf("Started the flow run with runID %v\n", runID)
@@ -99,7 +95,7 @@ func (fr flowrunner) StartRun(accountID string, flow Flow, context models.FlowCo
 }
 
 func (fr flowrunner) GetWorkflowRun(flowRunID models.RunID) (models.WorkflowRun, error) {
-	fTrigger:= trigger.NewFlowTrigger(fr.workflowRunStore, fr.taskRunStore)
+	fTrigger := trigger.NewFlowTrigger(fr.workflowRunStore, fr.taskRunStore)
 	return fTrigger.GetWorkflowRun(flowRunID)
 }
 
@@ -109,5 +105,3 @@ func (fr flowrunner) validateFlowGraph(f models.Flowgraph) error {
 	}
 	return nil
 }
-
-

@@ -3,7 +3,6 @@
 package poll
 
 import (
-
 	mock "github.com/stretchr/testify/mock"
 
 	"flow/models"

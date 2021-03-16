@@ -1,7 +1,6 @@
 package main
 
 import (
-
 	"flag"
 	"os"
 
@@ -19,4 +18,3 @@ func main() {
 	generator.Start(*workflowJSONPath)
 
 }
-

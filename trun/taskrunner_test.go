@@ -1,7 +1,6 @@
 package trun
 
 import (
-
 	"fmt"
 	"github.com/stretchr/testify/mock"
 	"testing"
@@ -78,11 +77,13 @@ func Test_taskrunner_Run(t *testing.T) {
 			statusChan := actualTaskRunSignals.TaskRunStatusChan
 			var err error
 			var status TaskRunStatus
-			loop:
+		loop:
 			for {
 				select {
-					case status = <- statusChan: break loop
-					case err = <- errChan: break loop
+				case status = <-statusChan:
+					break loop
+				case err = <-errChan:
+					break loop
 				}
 			}
 			fmt.Printf("Status is %v\n", status)
@@ -110,4 +111,3 @@ func (step1Handler) Run(flowContext models.FlowContext) (models.FlowContext, err
 func (step1Handler) Status(flowContext models.FlowContext) (steps.StepStatus, error) {
 	return steps.StepDone, nil
 }
-

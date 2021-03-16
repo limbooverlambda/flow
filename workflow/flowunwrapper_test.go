@@ -1,7 +1,6 @@
 package workflow
 
 import (
-
 	"github.com/stretchr/testify/mock"
 	"testing"
 
@@ -52,7 +51,7 @@ func TestToFlowGraph(t *testing.T) {
 				},
 			},
 			{ParallelTaskRuns: []models.TaskRun{
-				{	TaskName: "s2",
+				{TaskName: "s2",
 					TaskRunID:      "TR-s2-runID",
 					NextTaskRunIDS: []string{"TR-s3-runID"}},
 			}},

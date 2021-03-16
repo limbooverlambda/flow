@@ -1,7 +1,6 @@
 package trun
 
 import (
-
 	"errors"
 	"fmt"
 
@@ -49,7 +48,7 @@ func (tr taskrunner) Run(taskRunID string, flowContext models.FlowContext, handl
 		for {
 			taskRun, err = tr.process(taskRun, flowContext, handlerMap)
 			if err != nil {
-				taskRunErrorChan <- fmt.Errorf("error encountered while processing taskrun %v: %v",taskRun.TaskName, err)
+				taskRunErrorChan <- fmt.Errorf("error encountered while processing taskrun %v: %v", taskRun.TaskName, err)
 				return
 			}
 			if tr.inTerminalState(taskRun) {

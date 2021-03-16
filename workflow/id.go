@@ -1,7 +1,6 @@
 package workflow
 
 import (
-
 	"crypto/sha256"
 	"fmt"
 	"github.com/segmentio/ksuid"
@@ -23,7 +22,7 @@ func NewIDGenerator() Id {
 	return runID{}
 }
 
-type runID struct {}
+type runID struct{}
 
 func (r runID) GenerateID() string {
 	id := ksuid.New().String()

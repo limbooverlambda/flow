@@ -50,7 +50,7 @@ func (fr fUnwrap) ToFlowGraph(runID string, flowContext models.FlowContext, flow
 	}
 	bfs(buffer, processFn, nextStepsFn)
 	taskGraph := models.Flowgraph{
-		flowSteps,
+		Flowsteps: flowSteps,
 	}
 	err := fr.persistFlowGraph(runID, flowContext, flow, taskGraph)
 	return taskGraph, err
